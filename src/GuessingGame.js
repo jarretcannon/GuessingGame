@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 
 const GuessingGame = () => {
   const [guess, setGuess] = useState("");
-  const [message, setMessage] = useState("Start Guessing");
+
   const [randomNumber, setRandomNumber] = useState(null);
   const [timeGuessed, setTimeGuessed] = useState(null);
 
@@ -31,11 +31,11 @@ const GuessingGame = () => {
     let parseNum = parseInt(guess);
 
     if (parseNum === randomNumber) {
-      setMessage("hey you got it!");
+      alert("You got it!");
     } else if (parseNum > randomNumber) {
-      setMessage("hey that's too high!");
+      alert("That's too high!");
     } else {
-      setMessage("hey too low");
+      alert("That's too low");
     }
 
 
@@ -53,7 +53,6 @@ const GuessingGame = () => {
 
   function reset() {
     setGuess("");
-    setMessage("Start Guessing");
     setTimeGuessed(0);
     setRandomNumber(generateNum());
     localStorage.removeItem("guesses");
@@ -61,7 +60,10 @@ const GuessingGame = () => {
 
   return (
     <>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', textAlign: 'center' }}>
+    
       <Form onSubmit={handleSubmit}>
+        <Form.Label>Guessing Game</Form.Label>
         <Form.Group className="mb-3">
           <Form.Label>
             I am thinking of a number between 1 and 100, guess the lucky number!
@@ -74,14 +76,18 @@ const GuessingGame = () => {
             onChange={handleChange}
             value={guess}
             name="name"
+            maxLength={3}
+            
           />
-          <Button type="submit">Guess</Button>
-          <Form.Label>{message}</Form.Label>
+          <br/>
+          <Button style={{fontSize: '20px'}}>Guess</Button>
+         <br/> <br/>
           <Button onClick={reset} type="button">
             Reset
           </Button>
         </Form.Group>
       </Form>
+      </div>
     </>
   );
 };
